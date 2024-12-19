@@ -1,0 +1,23 @@
+{
+  "name": "arquitetura-hexagonal-example",
+  "version": "1.0.0",
+  "description": "Projeto de exemplo de aplicação do conceito de arquitetura hexagonal",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest"
+  },
+  "keywords": [
+    "typescript",
+    "vitest",
+    "testing",
+    "car",
+    "entity",
+    "node",
+    "unit-test"
+  ],
+  "author": "Jiovan Michel da Silva",
+  "license": "ISC",
+  "devDependencies": {
+    "vitest": "^2.1.8"
+  }
+}
