@@ -1,7 +1,3 @@
-
-
-
-
 import { ICar, ICarRepository, ICarService, ICarQuery } from "../ports/Car";
 import { Car } from "../entities/Car";
 
@@ -17,7 +13,7 @@ export class CarService implements ICarService {
         return await this.repository.find(query);
     }
 
-    async findOne(query?: any): Promise<ICar | null> {
+    async findOne(query?: ICarQuery): Promise<ICar | null> {
         return await this.repository.findOne(query);
     }
 
