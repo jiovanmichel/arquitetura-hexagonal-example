@@ -9,12 +9,67 @@
 # https://github.com/docker/awesome-compose
 services:
   server:
+    container_name: app-node-server
     build:
       context: .
     environment:
-      NODE_ENV: production
+      NODE_ENV: development
+      CHOKIDAR_USEPOLLING: "true"
+      MONGODB_HOST: mongodb
+      MONGODB_PORT: 27017
+      MONGODB_USER: root
+      MONGODB_PASSWORD: root
+      MONGODB_DATABASE: arquitetura-hexagonal
+      MONGODB_AUTH_SOURCE: admin
+    command: npm run dev
+    depends_on:
+      - mongodb
     ports:
       - 3000:3000
+    volumes:
+      - ./core:/usr/src/app/core
+      - ./adapters:/usr/src/app/adapters
+      - ./package.json:/usr/src/app/package.json
+      - ./package-lock.json:/usr/src/app/package-lock.json
+      - ./tsconfig.json:/usr/src/app/tsconfig.json
+      - ./vitest.config.ts:/usr/src/app/vitest.config.ts
+      - ./nodemon.json:/usr/src/app/nodemon.json
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  mongodb:
+    image: mongo:latest
+    container_name: app-mongodb
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./.docker/mongodb/data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  mongodb-data:
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
@@ -48,4 +103,8 @@ services:
 # secrets:
 #   db-password:
 #     file: db/password.txt
+
+networks:
+  app-network:
+    driver: bridge
 

@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
-import { connectMongo } from '../../db/mongo/connect';
-import { Container } from './config/Container';
-import { RouteLoader } from './config/RouteLoader';
+import { connectMongo } from '@adapters/db/mongo/connect';
+import { Container } from '@adapters/server/express/config/Container';
+import { RouteLoader } from '@adapters/server/express/config/RouteLoader';
 
 const app = express();
 const port = process.env.PORT || 3000;

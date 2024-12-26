@@ -72,6 +72,7 @@ export class CarController implements ICarController {
     }
 
     async findByYear(req: Request, res: Response): Promise<void> {
+        console.log(req.params.year);
         try {
             const year = parseInt(req.params.year);
             const cars = await this.carService.findByYear(year);
@@ -82,10 +83,9 @@ export class CarController implements ICarController {
     }
 
     async findByPriceRange(req: Request, res: Response): Promise<void> {
+        const { min, max } = req.params || {};
         try {
-            const min = parseFloat(req.query.min as string);
-            const max = parseFloat(req.query.max as string);
-            const cars = await this.carService.findByPriceRange(min, max);
+            const cars = await this.carService.findByPriceRange(parseFloat(min), parseFloat(max));
             res.json(cars);
         } catch (error) {
             res.status(500).json({ error: (error as Error).message });

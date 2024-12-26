@@ -6,8 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "vitest",
-    "start-express-server": "node --no-warnings --loader ts-node/esm adapters/server/express/index.ts",
-    "start": "node --no-warnings --loader ts-node/esm adapters/server/express/index.ts"
+    "start-express-server": "ts-node --esm -r tsconfig-paths/register ./adapters/server/express/index.ts",
+    "start": "tsx ./adapters/server/express/index.ts",
+    "dev": "nodemon"
   },
   "keywords": [
     "typescript",
@@ -24,7 +25,10 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.2",
+    "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.19.2",
     "vitest": "^2.1.8"
   },
   "dependencies": {

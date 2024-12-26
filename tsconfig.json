@@ -1,8 +1,22 @@
 {
-  "compilerOptions": {
-    "module": "CommonJS",
-    "moduleResolution": "Node",
-    "esModuleInterop": true,
-    "target": "ES2022"
-  }
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "allowImportingTsExtensions": true,
+        "noEmit": true,
+        "esModuleInterop": true,
+        "baseUrl": ".",
+        "paths": {
+            "@adapters/*": ["adapters/*"],
+            "@core/*": ["core/*"]
+        }
+    },
+    "include": [
+        "./adapters/**/*.ts",
+        "./core/**/*.ts",
+        "**/*.ts",
+        "*.ts"
+    ],
+    "exclude": ["node_modules", "dist"]
 } 

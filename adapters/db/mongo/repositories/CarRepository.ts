@@ -1,4 +1,4 @@
-import { ICarRepository, ICar } from '../../../../core/ports/Car';
+import { ICarRepository, ICar, ICarQuery } from '../../../../core/ports/Car';
 import { CarModel } from '../models/CarModel';
 
 export class CarRepository implements ICarRepository {
@@ -8,8 +8,19 @@ export class CarRepository implements ICarRepository {
         return this.mapToDomain(car);
     }
 
-    async find(query = {}): Promise<ICar[]> {
-        const cars = await CarModel.find(query);
+    async find(query: ICarQuery): Promise<ICar[]> {
+        const { price } = query;
+        const filter: any = {};
+
+        if (price) {
+            if (typeof price === 'object' && price.min && price.max) {    
+                filter.price = { $gte: price.min, $lte: price.max };
+            } else {
+                filter.price = price;
+            }
+        }
+
+        const cars = await CarModel.find(filter);
         return cars.map(car => this.mapToDomain(car));
     }
 

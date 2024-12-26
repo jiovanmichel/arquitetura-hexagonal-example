@@ -43,6 +43,7 @@ export class Car implements ICar {
     }
 
     private validatePrice(price: number): void {
+        console.log(price);
         if (price < 0) {
             throw new Error('Price cannot be negative');
         }

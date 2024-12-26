@@ -1,0 +1,6 @@
+{
+    "watch": ["core", "adapters"],
+    "ext": ".ts,.js,.json",
+    "ignore": ["**/*.spec.ts", "**/*.test.ts"],
+    "exec": "tsx ./adapters/server/express/index.ts"
+}
